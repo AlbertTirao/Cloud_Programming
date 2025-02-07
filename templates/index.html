@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News, Weather, and Music</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; padding: 0; }
+        .weather, .news, .playlists { margin-bottom: 20px; padding: 15px; border-radius: 5px; }
+        .weather { background-color: #f8f9fa; }
+        .news { border-bottom: 1px solid #ddd; }
+        .playlists { background-color: #f0f8ff; }
+        h1 { color: #333; }
+        a { text-decoration: none; color: blue; }
+        form { margin-bottom: 20px; }
+        input { padding: 8px; }
+    </style>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+</head>
+<body>
+    <h1>Latest News, Weather, and Music</h1>
+
+    <!-- Search Bar -->
+    <form method="GET" action="/">
+        <input type="text" name="city" placeholder="Enter city..." required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    <!-- Weather Section -->
+    <div class="weather">
+        <h2>Weather in {{ weather.name }}</h2>
+        <p>Temperature: {{ weather.main.temp }}°C</p>
+        <p>Condition: {{ weather.weather[0].description }}</p>
+        <p>Humidity: {{ weather.main.humidity }}%</p>
+    </div>
+
+    <!-- News Section -->
+    <div class="news">
+        <h2>Latest News</h2>
+        {% for article in articles %}
+            <div class="news-item">
+                <h3><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h3>
+                <p>{{ article.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Spotify Playlists Section -->
+    <div class="playlists">
+        <h2>Your Spotify Playlists</h2>
+        {% if playlists %}
+            <ul>
+                {% for playlist in playlists %}
+                    <li>{{ playlist }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You need to log in to Spotify to view your playlists.</p>
+        {% endif %}
+        <a href="{{ url_for('login') }}">Login with Spotify</a>
+    </div>
+
+    <!-- Spotify Music Player -->
+    <div class="spotify-player">
+        <h2>Spotify Music Player</h2>
+        {% if session.get('token_info') %}
+            <div id="player"></div>
+            <script>
+                window.onSpotifyWebPlaybackSDKReady = () => {
+                    const token = "{{ session['token_info']['access_token'] }}";
+                    const player = new Spotify.Player({
+                        name: "Web Playback SDK",
+                        getOAuthToken: cb => { cb(token); },
+                        volume: 0.5
+                    });
+
+                    player.addListener('ready', ({ device_id }) => {
+                        console.log('The Web Playback SDK is ready with Device ID', device_id);
+                        player.connect();
+                    });
+
+                    player.addListener('player_state_changed', state => {
+                        console.log(state);
+                    });
+
+                    player.connect();
+                };
+            </script>
+        {% else %}
+            <p>You need to log in to Spotify to play music.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

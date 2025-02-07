@@ -1,0 +1,183 @@
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar Styles */
+.navbar {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(90deg, #4e73df, #1cc88a); /* Gradient Background */
+    padding: 15px 0;
+    box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: background 0.3s ease-in-out;
+}
+
+.navbar:hover {
+    background: linear-gradient(90deg, #1cc88a, #4e73df); /* Reverse gradient on hover */
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out, transform 0.2s ease;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Add text shadow for pop */
+}
+
+/* Hover Effect */
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light Hover Effect */
+    color: #fff;
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+/* Active Link Style */
+.nav-links a.active {
+    background-color: #fff;
+    color: #1cc88a;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: underline; /* Underline active item */
+}
+
+/* Section Styles */
+.section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.section.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Section Divider */
+.section-divider {
+    border-top: 2px solid #ddd;
+    margin: 30px 0;
+}
+
+/* Weather Section */
+.weather {
+    background: #e3f2fd;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+.weather h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #1976d2;
+}
+.weather p {
+    font-size: 18px;
+    margin: 8px 0;
+    color: #555;
+}
+
+/* News Section */
+.news-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+.news-item:hover {
+    background-color: #f1f1f1;
+    transform: translateX(5px);
+}
+.news-item h3 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+.news-item p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Music Section */
+.playlists {
+    background: #f0f8ff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.playlists h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+.playlists ul {
+    list-style: none;
+    padding: 0;
+}
+.playlists li {
+    font-size: 18px;
+    margin: 12px 0;
+    color: #007bff;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+.playlists li:hover {
+    color: #0056b3;
+    text-decoration: underline;
+    transform: translateX(5px);
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .weather, .news-item, .playlists {
+        padding: 15px;
+    }
+
+    .weather h2, .playlists h2, .news-item h3 {
+        font-size: 22px;
+    }
+
+    footer {
+        font-size: 14px;
+    }
+}
