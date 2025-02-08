@@ -39,7 +39,7 @@ def get_weather(city):
 @app.route('/')
 def home():
     # Weather and news data
-    city = request.args.get('city', 'London')  # Default city is London
+    city = request.args.get('city', 'Dagupan')  # Default city is London
     news_articles = get_news()
     weather_data = get_weather(city)
     
