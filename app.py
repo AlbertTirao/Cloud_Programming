@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
+from flask_session import Session
 
 # Load API keys from .env file
 load_dotenv()
@@ -11,10 +12,14 @@ NEWSAPI_KEY = os.getenv("NEWSAPI_KEY")
 WEATHERAPI_KEY = os.getenv("OPEN_WEATHER_MAP")
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
-SPOTIFY_REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI")
+SPOTIFY_REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI")  
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
+
+app.config["SESSION_PERMANENT"] = False  
+app.config["SESSION_TYPE"] = "filesystem"  
+Session(app)  
 
 # Spotify OAuth setup
 sp_oauth = SpotifyOAuth(
@@ -49,6 +54,7 @@ def home():
     
     token_info = session.get("token_info")
     sp = Spotify(auth=token_info['access_token'])
+    session["token_info"] = sp_oauth.refresh_access_token(token_info["refresh_token"])
     
     # Get playlists of the current user
     results = sp.current_user_playlists()
