@@ -69,7 +69,7 @@ def callback():
     code = request.args.get('code')
     
     # Use the authorization code to get the access token
-    token_info = sp_oauth.get_access_token(code)
+    token_info = sp_oauth.get_access_token(code, as_dict=False)
     
     # Store the token info in the session
     session['token_info'] = token_info
